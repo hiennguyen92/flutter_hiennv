@@ -2,59 +2,42 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_hiennv/base/base_app_route.dart';
+import 'package:flutter_hiennv/base/base_application.dart';
 import 'package:flutter_hiennv/flutter_hiennv.dart';
+import 'package:flutter_hiennv/services/navigation_service.dart';
+import 'package:flutter_hiennv_example/AppRoute.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  var application = Application();
+
+  runApp(MultiProvider(
+      providers: application.getBaseProviders(),
+    child: application,
+  ));
 }
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+class Application extends BaseApplication<AppRoute> {
 
   @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await FlutterHiennv.platformVersion ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget getApp(BuildContext context, AppRoute appRoute) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      onGenerateRoute: appRoute.generateRoute,
+      initialRoute: AppRoute.tutorialScreen,
+      navigatorKey: NavigationService.navigationKey,
+      navigatorObservers: <NavigatorObserver>[
+        NavigationService.routeObserver
+      ],
     );
   }
+
+  @override
+  AppRoute providerAppRoute() {
+    return AppRoute.instance;
+  }
+
 }
