@@ -56,7 +56,7 @@ class _HomeScreenState extends BaseStateful<HomeScreen, HomeViewModel> {
     return FloatingActionButton(
       heroTag: null,
       onPressed: handleClickCounter,
-      tooltip: "Capture",
+      tooltip: "Increase",
       backgroundColor: Colors.white,
       child: Icon(
         Icons.add,

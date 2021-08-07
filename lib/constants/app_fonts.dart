@@ -1,5 +1,3 @@
-
-
 class AppFonts {
   AppFonts._();
 
@@ -10,7 +8,6 @@ class AppFonts {
   /// #region Fonts
   ///
   String fontRoboto = 'Roboto';
-
 
   /// #endregion
 

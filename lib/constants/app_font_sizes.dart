@@ -1,13 +1,9 @@
-
-
 class AppFontSizes {
-
   AppFontSizes._();
 
   factory AppFontSizes.initDefault() {
     return AppFontSizes._();
   }
-
 
   double xxxSmall = 8.0;
   double xxSmall = 10.0;

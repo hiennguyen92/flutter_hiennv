@@ -9,7 +9,6 @@ class LoadingDialog extends Dialog {
     required this.text,
   }) : super(key: key, backgroundColor: backgroundColor);
 
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -19,7 +18,6 @@ class LoadingDialog extends Dialog {
       ),
     );
   }
-
 
   static showLoadingDialog(BuildContext context) {
     showGeneralDialog(
@@ -40,7 +38,6 @@ class LoadingDialog extends Dialog {
       transitionDuration: const Duration(milliseconds: 10),
       transitionBuilder: buildMaterialDialogTransitions,
     );
-
   }
 
   static cancelLoadingDialog(BuildContext context) {
@@ -60,7 +57,4 @@ class LoadingDialog extends Dialog {
       child: child,
     );
   }
-
-
-
 }
