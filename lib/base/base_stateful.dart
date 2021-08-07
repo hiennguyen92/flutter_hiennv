@@ -38,6 +38,4 @@ abstract class BaseStateful<T extends StatefulWidget, E extends BaseViewModel>
 
   @protected
   Widget buildPageWidget(BuildContext context);
-
-
 }

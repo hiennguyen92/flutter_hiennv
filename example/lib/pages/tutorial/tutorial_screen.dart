@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_hiennv/services/navigation_service.dart';
+import 'package:flutter_hiennv_example/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../AppRoute.dart';

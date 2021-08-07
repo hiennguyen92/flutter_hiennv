@@ -10,12 +10,11 @@ class BaseCupertinoPageRoute extends CupertinoPageRoute<Object> {
       this.appSettings,
       this.appTransitionDuration})
       : super(builder: builder);
-  
+
   @override
   Duration get transitionDuration =>
       appTransitionDuration ?? super.transitionDuration;
 
   @override
   RouteSettings get settings => appSettings ?? super.settings;
-
 }

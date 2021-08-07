@@ -1,4 +1,1 @@
-
-abstract class BaseViewState {
-
-}
+abstract class BaseViewState {}

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
-class NavigationService {
-
+abstract class BaseAppNavigation {
   /// Global navigation key for whole application
-  static GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
 
   /// Get app context
-  static BuildContext? get appContext => navigationKey.currentContext;
+  BuildContext? get appContext => navigationKey.currentContext;
 
   /// App route observer
-  static RouteObserver<Route<dynamic>> routeObserver = RouteObserver<Route<dynamic>>();
+  RouteObserver<Route<dynamic>> routeObserver = RouteObserver<Route<dynamic>>();
 
   /// Pushing new page into navigation stack
   ///
@@ -42,14 +41,13 @@ class NavigationService {
     );
   }
 
-
   /// Push the route with the given name onto the navigator, and then remove all
   /// the previous routes until the `predicate` returns true.
   Future<T?> pushNamedAndRemoveUntil<T extends Object>(
-      String routeName, {
-        Object? args,
-        bool Function(Route<dynamic>)? predicate,
-      }) async {
+    String routeName, {
+    Object? args,
+    bool Function(Route<dynamic>)? predicate,
+  }) async {
     return navigationKey.currentState?.pushNamedAndRemoveUntil<T>(
       routeName,
       predicate ?? (_) => false,
@@ -60,9 +58,9 @@ class NavigationService {
   /// Push the given route onto the navigator, and then remove all the previous
   /// routes until the `predicate` returns true.
   Future<T?> pushAndRemoveUntil<T extends Object>(
-      Route<T> route, {
-        bool Function(Route<dynamic>)? predicate,
-      }) async {
+    Route<T> route, {
+    bool Function(Route<dynamic>)? predicate,
+  }) async {
     return navigationKey.currentState?.pushAndRemoveUntil<T>(
       route,
       predicate ?? (_) => false,
@@ -88,5 +86,4 @@ class NavigationService {
   void popUntil(String route) {
     navigationKey.currentState!.popUntil(ModalRoute.withName(route));
   }
-
 }

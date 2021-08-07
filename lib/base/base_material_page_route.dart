@@ -17,5 +17,4 @@ class BaseMaterialPageRoute extends MaterialPageRoute<Object> {
 
   @override
   RouteSettings get settings => appSettings ?? super.settings;
-
 }
