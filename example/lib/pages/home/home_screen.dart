@@ -41,11 +41,41 @@ class _HomeScreenState extends BaseStateful<HomeScreen, HomeViewModel> {
             Text('Provider Selector', style: regularTextStyle()),
             Selector<HomeViewModel, int>(
               selector: (_, provider) => provider.state.counter,
-              builder: (_, counter, __) => Text('$counter', style: regularTextStyle()),
+              builder: (_, counter, __) =>
+                  Text('$counter', style: regularTextStyle()),
             ),
             SizedBox(height: 20),
             Text('Provider Consumer', style: regularTextStyle()),
-            Consumer<HomeViewModel>(builder: (_, provider, __) => Text('${provider.state.counter}', style: regularTextStyle()))
+            Consumer<HomeViewModel>(
+                builder: (_, provider, __) => Text('${provider.state.counter}',
+                    style: regularTextStyle())),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                overlayColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.hovered))
+                      return Colors.blue.withOpacity(0.04);
+                    if (states.contains(MaterialState.focused) ||
+                        states.contains(MaterialState.pressed))
+                      return Colors.blue.withOpacity(0.12);
+                    return Colors.blue;
+                  },
+                ),
+              ),
+              onPressed: () {
+                viewModel.callGetApi();
+              },
+              child: Container(
+                height: 44.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Call Get Api', style: regularTextStyle(height: 1.0))
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

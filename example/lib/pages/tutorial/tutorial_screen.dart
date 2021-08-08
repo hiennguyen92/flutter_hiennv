@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_hiennv_example/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 
-import '../../AppRoute.dart';
+import '../../app_route.dart';
 
 class TutorialScreen extends StatefulWidget {
   @override

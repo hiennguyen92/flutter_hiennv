@@ -2,9 +2,11 @@ import 'package:flutter/src/widgets/navigator.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hiennv/base/base_app_route.dart';
 import 'package:flutter_hiennv/base/base_material_page_route.dart';
+import 'package:flutter_hiennv/services/network/network_service.dart';
 import 'package:flutter_hiennv_example/pages/home/home_screen.dart';
 import 'package:flutter_hiennv_example/pages/home/home_view_model.dart';
 import 'package:flutter_hiennv_example/pages/tutorial/tutorial_screen.dart';
+import 'package:provider/provider.dart';
 
 class AppRoute extends BaseAppRoute {
   static final AppRoute _instance = AppRoute._private();
@@ -28,7 +30,7 @@ class AppRoute extends BaseAppRoute {
         return AppPageRoute(
             appSettings: settings,
             builder: (_) => createProviderByPage(
-                ((BuildContext context) => HomeViewModel(context)),
+                ((BuildContext context) => HomeViewModel(context, Provider.of<NetworkService>(context, listen: false))),
                 HomeScreen()));
     }
   }
