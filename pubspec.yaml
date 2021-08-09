@@ -1,6 +1,6 @@
 name: flutter_hiennv
 description: A Flutter template using Provider with MVVM architecture that utilizes common best practices
-version: 0.0.1+3
+version: 0.0.1+4
 homepage: https://github.com/hiennguyen92/flutter_hiennv
 
 environment:

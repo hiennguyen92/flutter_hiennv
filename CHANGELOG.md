@@ -1,3 +1,10 @@
+
+## [0.0.1+4] - Aug 09, 2021.
+
+* update network service
+* update base model
+* update example
+
 ## [0.0.1+3] - Aug 09, 2021.
 
 * Add network service.
