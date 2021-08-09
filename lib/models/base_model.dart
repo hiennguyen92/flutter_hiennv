@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-abstract class BaseModel {
+abstract class BaseModel<T> {
 
-  @protected
-  void copyToProps(Map<String, dynamic> json);
+  T id;
+
+  BaseModel(this.id);
 
 }

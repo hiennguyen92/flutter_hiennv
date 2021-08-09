@@ -1,7 +1,5 @@
-
 class NetworkConfig {
-
-  String baseUrl = '';
+  String baseUrl = 'https://google.com';
 
   String? httpProxy;
 
@@ -14,5 +12,4 @@ class NetworkConfig {
   int? connectTimeout = 30000;
 
   bool isShowHttpLog = true;
-
 }

@@ -19,7 +19,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
       Future.delayed(Duration(seconds: 3), () {
         Provider.of<NavigationService>(context, listen: false)
-            .pushNamedAndRemoveUntil(AppRoute.homeScreen);
+            .pushNamedAndRemoveUntil(AppRoute.loginScreen);
       });
     });
   }

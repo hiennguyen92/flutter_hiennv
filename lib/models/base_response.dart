@@ -1,67 +1,34 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 
-class BaseResponse<T, E> {
-  dynamic _rawData;
-  dynamic _rawError;
-
+abstract class BaseResponse<T, E> {
+  dynamic _raw;
   T? _data;
   E? _error;
 
-  T? get data {
-    if (_data == null) {
-      _data = convertData(_rawData);
-    }
-    return _data;
-  }
+  T? get data => _data;
+  E? get error => _error;
 
-  E? get error {
-    if (_error == null) {
-      _error = convertError(_rawError);
-    }
-    return _error;
-  }
-
-  BaseResponse(Map<String, dynamic>? json,
-      {String? dataKey = 'data', String? errorKey = 'error'}) {
+  BaseResponse(Map<String, dynamic>? json) {
     if (json != null) {
-      _rawData = dataKey != null ? json[dataKey] : json;
-      _rawError = errorKey != null ? json[errorKey] : json;
+      _raw = json['raw'];
+      _data = convertData(json['data'], _raw);
+      _error = convertError(json['error'], _raw);
     }
   }
 
-  // factory BaseResponse.fromError(int errorCode, String message){
-  //   Map<String, dynamic> data = {};
-  //
-  //   return BaseResponse()
-  // }
-  //
-  // factory BaseResponse.fromException(dynamic error){
-  //   return BaseResponse()
-  // }
-
-  void prepare() {
-    if (_data == null) {
-      _data = convertData(_rawData);
-    }
-    if (_error == null) {
-      _error = convertError(_rawError);
-    }
-  }
-
-  void clear() {
-    _rawData = null;
-    _rawError = null;
+  bool hasError(){
+    return error != null;
   }
 
   @protected
-  T? convertData(dynamic data) {}
+  T? convertData(dynamic dataJson, dynamic raw);
 
   @protected
-  E? convertError(dynamic error) {}
+  E? convertError(dynamic dataError, dynamic raw);
 
   @override
   String toString() {
-    return 'BaseResponse{ data: $data, error: $error, dData: $_rawData, dError: $_rawError }';
+    return 'BaseResponse{ data: $data, error: $error, raw: $_raw }';
   }
 }

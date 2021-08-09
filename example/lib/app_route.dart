@@ -5,6 +5,8 @@ import 'package:flutter_hiennv/base/base_material_page_route.dart';
 import 'package:flutter_hiennv/services/network/network_service.dart';
 import 'package:flutter_hiennv_example/pages/home/home_screen.dart';
 import 'package:flutter_hiennv_example/pages/home/home_view_model.dart';
+import 'package:flutter_hiennv_example/pages/login/login_screen.dart';
+import 'package:flutter_hiennv_example/pages/login/login_view_model.dart';
 import 'package:flutter_hiennv_example/pages/tutorial/tutorial_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +20,7 @@ class AppRoute extends BaseAppRoute {
   static AppRoute get instance => _instance;
 
   static const tutorialScreen = '/tutorialScreen';
+  static const loginScreen = '/loginScreen';
   static const homeScreen = '/homeScreen';
 
   @override
@@ -26,6 +29,12 @@ class AppRoute extends BaseAppRoute {
       case tutorialScreen:
         return AppPageRoute(
             appSettings: settings, builder: (_) => TutorialScreen());
+      case loginScreen:
+        return AppPageRoute(
+            appSettings: settings,
+            builder: (_) => createProviderByPage(
+                ((BuildContext context) => LoginViewModel(context, Provider.of<NetworkService>(context, listen: false))),
+                LoginScreen()));
       case homeScreen:
         return AppPageRoute(
             appSettings: settings,
