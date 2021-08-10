@@ -1,35 +1,41 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_hiennv/base/base_application.dart';
 import 'package:flutter_hiennv/app_multiprovider.dart';
 import 'package:flutter_hiennv/services/network/network_config.dart';
 import 'package:flutter_hiennv/services/network/network_service.dart';
+import 'package:flutter_hiennv/services/ui/app_navigation_service.dart';
 import 'package:flutter_hiennv_example/app_route.dart';
-import 'package:flutter_hiennv_example/services/navigation_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   List<SingleChildWidget> appProviders = <SingleChildWidget>[
     Provider<NetworkService>(create: (_) => NetworkService(NetworkConfig()))
   ];
-  runApp(AppMultiProvider(
-      application: Application(), appProviders: appProviders));
+  runApp(
+      AppMultiProvider(application: Application(), appProviders: appProviders));
 }
 
-class Application extends BaseApplication<AppRoute, NavigationService> {
+class Application extends BaseApplication<AppRoute> {
   @override
   Widget getApp(BuildContext context, AppRoute appRoute,
-      NavigationService navigationService) {
+      AppNavigationService navigationService) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
       onGenerateRoute: appRoute.generateRoute,
       initialRoute: AppRoute.tutorialScreen,
       navigatorKey: navigationService.navigationKey,
+      localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       navigatorObservers: <NavigatorObserver>[navigationService.routeObserver],
     );
   }
@@ -39,8 +45,4 @@ class Application extends BaseApplication<AppRoute, NavigationService> {
     return AppRoute.instance;
   }
 
-  @override
-  NavigationService providerNavigationService() {
-    return NavigationService.instance;
-  }
 }

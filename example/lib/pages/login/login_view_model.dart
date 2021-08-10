@@ -25,18 +25,13 @@ class LoginViewModel extends BaseViewModel<LoginViewState> with ApiCallback {
   }
 
   @override
-  Future<void> onApiError(error) async {
-    print('onApiError: $error');
-  }
-
-  @override
-  Future<void> onCompleted(String path, bool status) async {
-    print('onCompleted: $path-$status');
+  Future<void> onCompleted(String path, dynamic response) async {
+    this.isLoading = false;
   }
 
   @override
   Future<void> onStart(String path) async {
-    print('onStart: $path');
+    this.isLoading = true;
   }
 
 

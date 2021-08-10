@@ -7,8 +7,7 @@ import 'package:flutter_hiennv/services/network/network_config.dart';
 
 mixin ApiCallback<T> {
   Future<void> onStart(String path);
-  Future<void> onApiError(dynamic error);
-  Future<void> onCompleted(String path, bool status);
+  Future<void> onCompleted(String path, dynamic response);
 
   Future<void> onReceiveProgress(int progress, int total) async {}
   Future<void> onSendProgress(int progress, int total) async {}
@@ -87,23 +86,27 @@ class NetworkService {
           options: options,
           cancelToken: cancelToken,
           onReceiveProgress: apiCallback?.onReceiveProgress);
-      apiCallback?.onCompleted(path, true);
-      return _buildJsonSuccess(response.data,
+
+      dynamic responseSuccess = _buildResponseSuccess(response.data,
           dataKey: dataKey, errorKey: errorKey);
+      apiCallback?.onCompleted(path, responseSuccess);
+      return responseSuccess;
     } catch (error) {
-      apiCallback?.onCompleted(path, false);
-      apiCallback?.onApiError(error);
-      return _buildJsonException(error);
+      dynamic responseError = _buildResponseException(error);
+      apiCallback?.onCompleted(path, responseError);
+      return responseError;
     }
   }
 
-  Future<Map<String, dynamic>> post<T>(String path,
+  Future<Map<String, dynamic>> post(String path,
       {String? baseUrl,
       dynamic data,
       Map<String, dynamic>? queryParameters,
       Options? options,
       CancelToken? cancelToken,
-      ApiCallback? apiCallback}) async {
+      ApiCallback? apiCallback,
+      String? dataKey = 'data',
+      String? errorKey = 'error'}) async {
     apiCallback?.onStart(path);
     if (_dio == null) {
       await _initDio(_networkConfig);
@@ -119,16 +122,154 @@ class NetworkService {
           cancelToken: cancelToken,
           onSendProgress: apiCallback?.onSendProgress,
           onReceiveProgress: apiCallback?.onReceiveProgress);
-      apiCallback?.onCompleted(path, true);
-      return _buildJsonSuccess(response.data);
+      dynamic responseSuccess = _buildResponseSuccess(response.data,
+          dataKey: dataKey, errorKey: errorKey);
+      apiCallback?.onCompleted(path, responseSuccess);
+      return responseSuccess;
     } catch (error) {
-      apiCallback?.onCompleted(path, false);
-      apiCallback?.onApiError(error);
-      return _buildJsonException(error);
+      dynamic responseError = _buildResponseException(error);
+      apiCallback?.onCompleted(path, responseError);
+      return responseError;
     }
   }
 
-  Map<String, dynamic> _buildJsonSuccess(json,
+  Future<Map<String, dynamic>> put(String path,
+      {String? baseUrl,
+      dynamic data,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken,
+      ApiCallback? apiCallback,
+      String? dataKey = 'data',
+      String? errorKey = 'error'}) async {
+    apiCallback?.onStart(path);
+    if (_dio == null) {
+      await _initDio(_networkConfig);
+    }
+    if (baseUrl != null && baseUrl.isNotEmpty) {
+      path = '$baseUrl/$path';
+    }
+    try {
+      Response<dynamic> response = await _dio!.put(path,
+          data: data,
+          queryParameters: queryParameters,
+          options: options,
+          cancelToken: cancelToken,
+          onSendProgress: apiCallback?.onSendProgress,
+          onReceiveProgress: apiCallback?.onReceiveProgress);
+      dynamic responseSuccess = _buildResponseSuccess(response.data,
+          dataKey: dataKey, errorKey: errorKey);
+      apiCallback?.onCompleted(path, responseSuccess);
+      return responseSuccess;
+    } catch (error) {
+      dynamic responseError = _buildResponseException(error);
+      apiCallback?.onCompleted(path, responseError);
+      return responseError;
+    }
+  }
+
+  Future<Map<String, dynamic>> patch(String path,
+      {String? baseUrl,
+      dynamic data,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken,
+      ApiCallback? apiCallback,
+      String? dataKey = 'data',
+      String? errorKey = 'error'}) async {
+    apiCallback?.onStart(path);
+    if (_dio == null) {
+      await _initDio(_networkConfig);
+    }
+    if (baseUrl != null && baseUrl.isNotEmpty) {
+      path = '$baseUrl/$path';
+    }
+    try {
+      Response<dynamic> response = await _dio!.patch(path,
+          data: data,
+          queryParameters: queryParameters,
+          options: options,
+          cancelToken: cancelToken,
+          onSendProgress: apiCallback?.onSendProgress,
+          onReceiveProgress: apiCallback?.onReceiveProgress);
+      dynamic responseSuccess = _buildResponseSuccess(response.data,
+          dataKey: dataKey, errorKey: errorKey);
+      apiCallback?.onCompleted(path, responseSuccess);
+      return responseSuccess;
+    } catch (error) {
+      dynamic responseError = _buildResponseException(error);
+      apiCallback?.onCompleted(path, responseError);
+      return responseError;
+    }
+  }
+
+  Future<Map<String, dynamic>> delete(String path,
+      {String? baseUrl,
+      dynamic data,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken,
+      ApiCallback? apiCallback,
+      String? dataKey = 'data',
+      String? errorKey = 'error'}) async {
+    apiCallback?.onStart(path);
+    if (_dio == null) {
+      await _initDio(_networkConfig);
+    }
+    if (baseUrl != null && baseUrl.isNotEmpty) {
+      path = '$baseUrl/$path';
+    }
+    try {
+      Response<dynamic> response = await _dio!.delete(path,
+          data: data,
+          queryParameters: queryParameters,
+          options: options,
+          cancelToken: cancelToken);
+      dynamic responseSuccess = _buildResponseSuccess(response.data,
+          dataKey: dataKey, errorKey: errorKey);
+      apiCallback?.onCompleted(path, responseSuccess);
+      return responseSuccess;
+    } catch (error) {
+      dynamic responseError = _buildResponseException(error);
+      apiCallback?.onCompleted(path, responseError);
+      return responseError;
+    }
+  }
+
+  Future<Map<String, dynamic>> head(String path,
+      {String? baseUrl,
+      dynamic data,
+      Map<String, dynamic>? queryParameters,
+      Options? options,
+      CancelToken? cancelToken,
+      ApiCallback? apiCallback,
+      String? dataKey = 'data',
+      String? errorKey = 'error'}) async {
+    apiCallback?.onStart(path);
+    if (_dio == null) {
+      await _initDio(_networkConfig);
+    }
+    if (baseUrl != null && baseUrl.isNotEmpty) {
+      path = '$baseUrl/$path';
+    }
+    try {
+      Response<dynamic> response = await _dio!.head(path,
+          data: data,
+          queryParameters: queryParameters,
+          options: options,
+          cancelToken: cancelToken);
+      dynamic responseSuccess = _buildResponseSuccess(response.data,
+          dataKey: dataKey, errorKey: errorKey);
+      apiCallback?.onCompleted(path, responseSuccess);
+      return responseSuccess;
+    } catch (error) {
+      dynamic responseError = _buildResponseException(error);
+      apiCallback?.onCompleted(path, responseError);
+      return responseError;
+    }
+  }
+
+  Map<String, dynamic> _buildResponseSuccess(json,
       {String? dataKey = 'data', String? errorKey = 'error'}) {
     dynamic rawData, rawError;
     if ((json is Map) && dataKey != null) {
@@ -148,7 +289,7 @@ class NetworkService {
     return data;
   }
 
-  Map<String, dynamic> _buildJsonException(error) {
+  Map<String, dynamic> _buildResponseException(error) {
     int errorCode = -1;
     String message = '';
     String raw = '';

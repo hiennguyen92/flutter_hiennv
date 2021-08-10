@@ -25,14 +25,10 @@ class HomeViewModel extends BaseViewModel<HomeViewState> with ApiCallback {
     print('userResponse: $usersResponse');
   }
 
-  @override
-  Future<void> onApiError(error) async {
-    //print('error: $error');
-  }
 
   @override
-  Future<void> onCompleted(String path, bool status) async {
-    print('onCompleted: $path- $status');
+  Future<void> onCompleted(String path, dynamic error) async {
+    print('onCompleted: $path- $error');
   }
 
   @override

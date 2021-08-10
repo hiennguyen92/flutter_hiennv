@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_hiennv_example/services/navigation_service.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_hiennv/services/ui/app_navigation_service.dart';
 import '../../app_route.dart';
 
 class TutorialScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
     super.initState();
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
       Future.delayed(Duration(seconds: 3), () {
-        Provider.of<NavigationService>(context, listen: false)
+        Provider.of<AppNavigationService>(context, listen: false)
             .pushNamedAndRemoveUntil(AppRoute.loginScreen);
       });
     });
