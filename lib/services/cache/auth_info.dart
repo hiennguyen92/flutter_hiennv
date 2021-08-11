@@ -34,6 +34,7 @@ class AuthInfo extends BaseChangeNotifier {
       this._token = newToken;
       notifyListeners();
     }
+    print('isSaved: $isSaved - $newToken');
     return isSaved;
   }
 

@@ -75,18 +75,18 @@ class NetworkService {
       path = '$baseUrl/$path';
     }
     try {
-      Response response = await _dio!.get(path,
+      Response<Map<String, dynamic>> response = await _dio!.get<Map<String, dynamic>>(path,
           queryParameters: queryParameters,
           options: options,
           cancelToken: cancelToken,
           onReceiveProgress: apiCallback?.onReceiveProgress);
 
-      dynamic responseSuccess = _buildResponseSuccess(response.data,
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
           dataKey: dataKey, errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
-      dynamic responseError = _buildResponseException(error);
+      Map<String, dynamic> responseError = _buildResponseException(error);
       apiCallback?.onCompleted(path, responseError);
       return responseError;
     }
@@ -109,19 +109,19 @@ class NetworkService {
       path = '$baseUrl/$path';
     }
     try {
-      Response<dynamic> response = await _dio!.post(path,
+      Response<Map<String, dynamic>> response = await _dio!.post<Map<String, dynamic>>(path,
           data: data,
           queryParameters: queryParameters,
           options: options,
           cancelToken: cancelToken,
           onSendProgress: apiCallback?.onSendProgress,
           onReceiveProgress: apiCallback?.onReceiveProgress);
-      dynamic responseSuccess = _buildResponseSuccess(response.data,
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
           dataKey: dataKey, errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
-      dynamic responseError = _buildResponseException(error);
+      Map<String, dynamic> responseError = _buildResponseException(error);
       apiCallback?.onCompleted(path, responseError);
       return responseError;
     }
@@ -144,19 +144,19 @@ class NetworkService {
       path = '$baseUrl/$path';
     }
     try {
-      Response<dynamic> response = await _dio!.put(path,
+      Response<Map<String, dynamic>> response = await _dio!.put<Map<String, dynamic>>(path,
           data: data,
           queryParameters: queryParameters,
           options: options,
           cancelToken: cancelToken,
           onSendProgress: apiCallback?.onSendProgress,
           onReceiveProgress: apiCallback?.onReceiveProgress);
-      dynamic responseSuccess = _buildResponseSuccess(response.data,
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
           dataKey: dataKey, errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
-      dynamic responseError = _buildResponseException(error);
+      Map<String, dynamic> responseError = _buildResponseException(error);
       apiCallback?.onCompleted(path, responseError);
       return responseError;
     }
@@ -179,19 +179,19 @@ class NetworkService {
       path = '$baseUrl/$path';
     }
     try {
-      Response<dynamic> response = await _dio!.patch(path,
+      Response<Map<String, dynamic>> response = await _dio!.patch<Map<String, dynamic>>(path,
           data: data,
           queryParameters: queryParameters,
           options: options,
           cancelToken: cancelToken,
           onSendProgress: apiCallback?.onSendProgress,
           onReceiveProgress: apiCallback?.onReceiveProgress);
-      dynamic responseSuccess = _buildResponseSuccess(response.data,
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
           dataKey: dataKey, errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
-      dynamic responseError = _buildResponseException(error);
+      Map<String, dynamic> responseError = _buildResponseException(error);
       apiCallback?.onCompleted(path, responseError);
       return responseError;
     }
@@ -214,17 +214,17 @@ class NetworkService {
       path = '$baseUrl/$path';
     }
     try {
-      Response<dynamic> response = await _dio!.delete(path,
+      Response<Map<String, dynamic>> response = await _dio!.delete<Map<String, dynamic>>(path,
           data: data,
           queryParameters: queryParameters,
           options: options,
           cancelToken: cancelToken);
-      dynamic responseSuccess = _buildResponseSuccess(response.data,
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
           dataKey: dataKey, errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
-      dynamic responseError = _buildResponseException(error);
+      Map<String, dynamic> responseError = _buildResponseException(error);
       apiCallback?.onCompleted(path, responseError);
       return responseError;
     }
@@ -247,17 +247,17 @@ class NetworkService {
       path = '$baseUrl/$path';
     }
     try {
-      Response<dynamic> response = await _dio!.head(path,
+      Response<Map<String, dynamic>> response = await _dio!.head<Map<String, dynamic>>(path,
           data: data,
           queryParameters: queryParameters,
           options: options,
           cancelToken: cancelToken);
-      dynamic responseSuccess = _buildResponseSuccess(response.data,
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
           dataKey: dataKey, errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
-      dynamic responseError = _buildResponseException(error);
+      Map<String, dynamic> responseError = _buildResponseException(error);
       apiCallback?.onCompleted(path, responseError);
       return responseError;
     }
@@ -266,6 +266,10 @@ class NetworkService {
   Map<String, dynamic> _buildResponseSuccess(json,
       {String? dataKey = 'data', String? errorKey = 'error'}) {
     dynamic rawData, rawError;
+
+    print('test is Map: ${json is Map}');
+    print('test is String: ${json is String}');
+
     if ((json is Map) && dataKey != null) {
       rawData = json[dataKey];
     } else {

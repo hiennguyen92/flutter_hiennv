@@ -7,7 +7,7 @@ class Token {
 
   factory Token.fromJson(Map<String, dynamic> json) => Token(
     accessToken: json['accessToken'] as String,
-    refreshToken: json['refreshToken'] as String,
+    refreshToken: json['refreshToken'] as String?,
     extra: json['extra'],
   );
 

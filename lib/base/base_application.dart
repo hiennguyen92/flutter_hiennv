@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hiennv/services/auth/authentication_api_service.dart';
 import 'package:flutter_hiennv/services/auth/authentication_service.dart';
 import 'package:flutter_hiennv/services/cache/auth_info.dart';
 import 'package:flutter_hiennv/services/cache/cache_service.dart';
@@ -34,9 +35,9 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
   @protected
   T providerAppRoute();
 
+
   @protected
-  AuthenticationService providerAuthenticationService(
-      NetworkService networkService, AuthInfo authInfo);
+  AuthenticationApiService providerAuthenticationApiService(NetworkService networkService, AuthInfo authInfo);
 
   List<SingleChildWidget> getBaseProviders() {
     return <SingleChildWidget>[
@@ -50,11 +51,17 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
           create: (BuildContext context) => AuthInfo(
                 Provider.of(context, listen: false),
               )),
+      ChangeNotifierProvider<AuthenticationApiService>(
+          create: (BuildContext context) => providerAuthenticationApiService(
+            Provider.of(context, listen: false),
+            Provider.of(context, listen: false),
+          )),
       ChangeNotifierProvider<AuthenticationService>(
-          create: (BuildContext context) => providerAuthenticationService(
+          create: (BuildContext context) => AuthenticationService(
                 Provider.of(context, listen: false),
                 Provider.of(context, listen: false),
               )),
+
     ];
   }
 }

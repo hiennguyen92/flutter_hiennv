@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hiennv/services/auth/authentication_api_service.dart';
 import 'package:flutter_hiennv/services/auth/authentication_service.dart';
 import 'package:flutter_hiennv/services/cache/auth_info.dart';
+import 'package:flutter_hiennv_example/services/authentication_api_service_impl.dart';
 import 'dart:async';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -46,8 +48,9 @@ class Application extends BaseApplication<AppRoute> {
   }
 
   @override
-  AuthenticationService providerAuthenticationService(NetworkService networkService, AuthInfo authInfo) {
-    return AppAuthenticationService(networkService, authInfo);
+  AuthenticationApiService providerAuthenticationApiService(NetworkService networkService, AuthInfo authInfo) {
+    return AuthenticationApiServiceImplement(networkService, authInfo);
   }
+
 
 }
