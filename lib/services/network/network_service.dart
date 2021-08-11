@@ -3,15 +3,9 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_hiennv/services/network/api_callback.dart';
 import 'package:flutter_hiennv/services/network/network_config.dart';
 
-mixin ApiCallback<T> {
-  Future<void> onStart(String path);
-  Future<void> onCompleted(String path, dynamic response);
-
-  Future<void> onReceiveProgress(int progress, int total) async {}
-  Future<void> onSendProgress(int progress, int total) async {}
-}
 
 class NetworkService {
   final NetworkConfig _networkConfig;

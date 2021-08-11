@@ -1,4 +1,7 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hiennv/services/auth/authentication_service.dart';
+import 'package:flutter_hiennv/services/cache/cache_service.dart';
+import 'package:flutter_hiennv/services/ui/app_dialog_service.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_hiennv/services/network/network_service.dart';
 
@@ -6,6 +9,19 @@ extension ProviderExt on BuildContext {
   NetworkService networkService() {
     return Provider.of<NetworkService>(this, listen: false);
   }
+
+  AppDialogService appDialogService() {
+    return Provider.of<AppDialogService>(this, listen: false);
+  }
+
+  AuthenticationService authenticationService() {
+    return Provider.of<AuthenticationService>(this, listen: false);
+  }
+
+  CacheService cacheService() {
+    return Provider.of<CacheService>(this, listen: false);
+  }
+
 }
 
 extension MapJsonExt on Map<String, dynamic> {

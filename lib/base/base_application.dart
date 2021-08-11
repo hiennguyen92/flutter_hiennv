@@ -1,4 +1,9 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_hiennv/services/auth/authentication_service.dart';
+import 'package:flutter_hiennv/services/cache/auth_info.dart';
+import 'package:flutter_hiennv/services/cache/cache_service.dart';
+import 'package:flutter_hiennv/services/network/network_config.dart';
+import 'package:flutter_hiennv/services/network/network_service.dart';
 import 'package:flutter_hiennv/services/ui/app_dialog_service.dart';
 import 'package:flutter_hiennv/services/ui/app_navigation_service.dart';
 import 'package:flutter_hiennv/base/base_app_route.dart';
@@ -29,13 +34,27 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
   @protected
   T providerAppRoute();
 
+  @protected
+  AuthenticationService providerAuthenticationService(
+      NetworkService networkService, AuthInfo authInfo);
+
   List<SingleChildWidget> getBaseProviders() {
     return <SingleChildWidget>[
       Provider<T>(create: (_) => providerAppRoute()),
       Provider<AppNavigationService>(
           create: (_) => AppNavigationService.instance),
-      Provider<AppDialogService>(
-          create: (_) => AppDialogService()),
+      Provider<AppDialogService>(create: (_) => AppDialogService()),
+      Provider<CacheService>(create: (_) => CacheService()),
+      Provider<NetworkService>(create: (_) => NetworkService(NetworkConfig())),
+      ChangeNotifierProvider<AuthInfo>(
+          create: (BuildContext context) => AuthInfo(
+                Provider.of(context, listen: false),
+              )),
+      ChangeNotifierProvider<AuthenticationService>(
+          create: (BuildContext context) => providerAuthenticationService(
+                Provider.of(context, listen: false),
+                Provider.of(context, listen: false),
+              )),
     ];
   }
 }

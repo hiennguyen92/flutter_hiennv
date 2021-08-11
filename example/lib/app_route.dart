@@ -33,13 +33,13 @@ class AppRoute extends BaseAppRoute {
         return AppPageRoute(
             appSettings: settings,
             builder: (_) => createProviderByPage(
-                ((BuildContext context) => LoginViewModel(context, Provider.of<NetworkService>(context, listen: false))),
+                ((BuildContext context) => LoginViewModel(context)),
                 LoginScreen()));
       case homeScreen:
         return AppPageRoute(
             appSettings: settings,
             builder: (_) => createProviderByPage(
-                ((BuildContext context) => HomeViewModel(context, Provider.of<NetworkService>(context, listen: false))),
+                ((BuildContext context) => HomeViewModel(context)),
                 HomeScreen()));
     }
   }

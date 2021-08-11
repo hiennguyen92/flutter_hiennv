@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hiennv/services/auth/authentication_service.dart';
+import 'package:flutter_hiennv/services/cache/auth_info.dart';
 import 'dart:async';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -14,9 +16,7 @@ import 'package:provider/single_child_widget.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  List<SingleChildWidget> appProviders = <SingleChildWidget>[
-    Provider<NetworkService>(create: (_) => NetworkService(NetworkConfig()))
-  ];
+  List<SingleChildWidget> appProviders = <SingleChildWidget>[];
   runApp(
       AppMultiProvider(application: Application(), appProviders: appProviders));
 }
@@ -43,6 +43,11 @@ class Application extends BaseApplication<AppRoute> {
   @override
   AppRoute providerAppRoute() {
     return AppRoute.instance;
+  }
+
+  @override
+  AuthenticationService providerAuthenticationService(NetworkService networkService, AuthInfo authInfo) {
+    return AppAuthenticationService(networkService, authInfo);
   }
 
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hiennv/base/base_stateful.dart';
 import 'package:flutter_hiennv/widgets/keyboard_dismiss/keyboard_dismiss.dart';
 import 'package:flutter_hiennv/constants/app_textstyles.dart';
-import 'package:flutter_hiennv/widgets/loading_dialog/loading_dialog.dart';
+import 'package:flutter_hiennv/utils/extension.dart';
 import 'package:flutter_hiennv/services/ui/app_dialog_service.dart';
 import 'package:flutter_hiennv_example/pages/login/login_view_model.dart';
 import 'package:provider/provider.dart';
@@ -33,11 +33,18 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
   }
 
   void loginSuccess(BuildContext context) async {
-    //LoadingDialog.showLoadingDialog(context);
-    Provider.of<AppDialogService>(context, listen: false).showAppDialog(context: context, title: 'Hello', content: "content", textButton: 'Shit');
+    Provider.of<AppDialogService>(context, listen: false).showLoading(context, text: 'Loading...');
     await viewModel.callLoginApi('hiennguyen92', '12345678');
-    //LoadingDialog.cancelLoadingDialog(context);
-    Provider.of<AppDialogService>(context, listen: false).hideAppDialog(force: true);
+    Provider.of<AppDialogService>(context, listen: false)
+        .hideAppDialog(force: true);
+  }
+
+  void loginFail(BuildContext context) async {
+    Provider.of<AppDialogService>(context, listen: false).showLoading(context, text: 'Loading...');
+    await viewModel.callLoginApi(
+        'hiennguyen92', '12345678s');
+    Provider.of<AppDialogService>(context, listen: false)
+        .hideAppDialog(force: true);
   }
 
   Widget buildPageBody(BuildContext context) {
@@ -66,13 +73,14 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
                       Expanded(
                           child: Form(
                         key: _formGlobalKey,
-                        autovalidateMode: AutovalidateMode.always,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Column(
                             children: <Widget>[
                               TextFormField(
                                 focusNode: focusUserNode,
+                                initialValue: 'hiennguyen92',
                                 decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.transparent,
@@ -93,16 +101,12 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
                                             focusUserNode.hasFocus ? 18.0 : 14),
                                     labelText: 'Username',
                                     prefixIcon: Icon(Icons.gite)),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter Username';
-                                  }
-                                  return null;
-                                },
+                                validator: viewModel.usernameValidator,
                               ),
                               SizedBox(height: 15),
                               TextFormField(
                                   focusNode: focusPassNode,
+                                  initialValue: '12345678',
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.transparent,
@@ -124,12 +128,7 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
                                               : 14),
                                       labelText: 'Password',
                                       prefixIcon: Icon(Icons.password)),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter password';
-                                    }
-                                    return null;
-                                  },
+                                  validator: viewModel.passwordValidator,
                                   obscureText: true),
                               SizedBox(height: 10),
                               ElevatedButton(
@@ -162,10 +161,7 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
                                 ),
                                 onPressed: () async {
                                   if (_formGlobalKey.currentState!.validate()) {
-                                    LoadingDialog.showLoadingDialog(context);
-                                    await viewModel.callLoginApi(
-                                        'hiennguyen92', '12345678s');
-                                    LoadingDialog.cancelLoadingDialog(context);
+                                    loginFail(context);
                                   }
                                 },
                                 child: Text('Login Fail'),
