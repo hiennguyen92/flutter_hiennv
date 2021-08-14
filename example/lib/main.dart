@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hiennv/base/base_app_route.dart';
 import 'package:flutter_hiennv/services/auth/authentication_api_service.dart';
 import 'package:flutter_hiennv/services/auth/authentication_service.dart';
 import 'package:flutter_hiennv/services/cache/auth_info.dart';
@@ -24,9 +25,9 @@ Future<void> main() async {
 }
 
 class Application extends BaseApplication<AppRoute> {
+
   @override
-  Widget getApp(BuildContext context, AppRoute appRoute,
-      AppNavigationService navigationService) {
+  Widget getApp(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
@@ -43,19 +44,21 @@ class Application extends BaseApplication<AppRoute> {
   }
 
   @override
-  AppRoute providerAppRoute() {
+  AppRoute appRouteProvider() {
     return AppRoute.instance;
   }
 
   @override
-  AuthenticationApiService providerAuthenticationApiService(NetworkService networkService, AuthInfo authInfo) {
+  AuthenticationApiService authenticationApiServiceProvider(NetworkService networkService, AuthInfo authInfo) {
     return AuthenticationApiServiceImplement(networkService, authInfo);
   }
 
   @override
   void afterOpenAppHasAuthInfo(BuildContext context, AuthInfo authInfo) {
     print('OK: $authInfo');
+    navigationService.pushNamedAndRemoveUntil(AppRoute.homeScreen);
   }
+
 
 
 }

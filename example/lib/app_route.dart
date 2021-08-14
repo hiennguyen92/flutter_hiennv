@@ -23,7 +23,7 @@ class AppRoute extends BaseAppRoute {
   static const loginScreen = '/loginScreen';
   static const homeScreen = '/homeScreen';
 
-  @override
+
   Route<Object>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case tutorialScreen:

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hiennv/base/base_view_model.dart';
 import 'package:flutter_hiennv/base/base_view_state.dart';
 import 'package:flutter_hiennv/services/network/network_service.dart';
+import 'package:flutter_hiennv_example/app_route.dart';
 import 'package:flutter_hiennv_example/models/user_response.dart';
 
 class HomeViewModel extends BaseViewModel<HomeViewState> {
@@ -21,6 +22,11 @@ class HomeViewModel extends BaseViewModel<HomeViewState> {
     //     dataKey: 'dataX');
     // UserResponse usersResponse = UserResponse.fromJson(json);
     // print('userResponse: $usersResponse');
+  }
+
+  void logout() async {
+      await authInfo.clear();
+      appNavigationService.pushNamedAndRemoveUntil(AppRoute.loginScreen);
   }
 
 }

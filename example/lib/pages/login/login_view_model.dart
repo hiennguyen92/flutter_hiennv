@@ -2,8 +2,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hiennv/base/auth_view_model.dart';
 import 'package:flutter_hiennv/base/base_view_state.dart';
 import 'package:flutter_hiennv/services/network/api_callback.dart';
+import 'package:flutter_hiennv_example/models/auth_response.dart';
 
-class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback {
+class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback<AuthResponse> {
 
 
   LoginViewModel(BuildContext context) : super(context, LoginViewState());
@@ -33,11 +34,13 @@ class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback {
   @override
   Future<void> onCompleted(String path, response) async {
     isLoading = false;
+    appDialogService.hideLoading(force: true);
   }
 
   @override
   Future<void> onStart(String path) async {
     isLoading = true;
+    appDialogService.showLoading(context, text: "Loading...");
   }
 
 

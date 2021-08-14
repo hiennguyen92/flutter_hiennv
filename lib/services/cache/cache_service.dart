@@ -9,6 +9,7 @@ class CacheService {
 
     if(value == null){
       refs.remove(key);
+      return true;
     }
     if (value is String) {
       return refs.setString(key, value);

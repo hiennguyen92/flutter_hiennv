@@ -33,10 +33,7 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
   }
 
   void loginSuccess(BuildContext context) async {
-    Provider.of<AppDialogService>(context, listen: false).showLoading(context, text: 'Loading...');
     await viewModel.callLoginApi(viewModel.state.username!, viewModel.state.password!);
-    Provider.of<AppDialogService>(context, listen: false)
-        .hideAppDialog(force: true);
   }
 
   void loginFail(BuildContext context) async {

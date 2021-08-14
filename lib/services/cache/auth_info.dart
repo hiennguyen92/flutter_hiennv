@@ -38,4 +38,11 @@ class AuthInfo extends BaseChangeNotifier {
     return isSaved;
   }
 
+  Future<bool> clear() async {
+    this._token = null;
+    bool isCleared = await _cacheService.clear();
+    notifyListeners();
+    return isCleared;
+  }
+
 }

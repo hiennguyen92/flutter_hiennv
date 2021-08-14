@@ -26,6 +26,22 @@ class _HomeScreenState extends BaseStateful<HomeScreen, HomeViewModel> {
       elevation: 0.0,
       centerTitle: true,
       title: Text('Home Screen', style: mediumTextStyle()),
+      actions: [
+        PopupMenuButton<int>(
+          onSelected: (item) => onLogout(item),
+          itemBuilder: (_) => [
+            PopupMenuItem(
+                enabled: true,
+                child: Row(
+                  children: <Widget>[
+                    Icon(Icons.logout, color: Colors.black),
+                    Text(' Logout', style: regularTextStyle(color: Colors.black)),
+                  ],
+                ),
+                value: 0)
+          ],
+        )
+      ],
     );
   }
 
@@ -97,5 +113,9 @@ class _HomeScreenState extends BaseStateful<HomeScreen, HomeViewModel> {
 
   void handleClickCounter() {
     viewModel.increase();
+  }
+
+  onLogout(int item) {
+    viewModel.logout();
   }
 }

@@ -32,7 +32,7 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
     return ScreenUtilInit(
         designSize: designSize,
         builder: () {
-          return getApp(context, appRoute, navigationService);
+          return getApp(context);
         });
   }
 
@@ -43,18 +43,17 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
   void afterOpenAppHasAuthInfo(BuildContext context, AuthInfo authInfo);
 
   @protected
-  Widget getApp(
-      BuildContext context, T appRoute, AppNavigationService navigationService);
+  Widget getApp(BuildContext context);
 
   @protected
-  T providerAppRoute();
+  T appRouteProvider();
 
   @protected
-  AuthenticationApiService providerAuthenticationApiService(NetworkService networkService, AuthInfo authInfo);
+  AuthenticationApiService authenticationApiServiceProvider(NetworkService networkService, AuthInfo authInfo);
 
   List<SingleChildWidget> getBaseProviders() {
     return <SingleChildWidget>[
-      Provider<T>(create: (_) => providerAppRoute()),
+      Provider<T>(create: (_) => appRouteProvider()),
       Provider<AppNavigationService>(
           create: (_) => AppNavigationService.instance),
       Provider<AppDialogService>(create: (_) => AppDialogService()),
@@ -65,7 +64,7 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
                 Provider.of(context, listen: false),
               )),
       ChangeNotifierProvider<AuthenticationApiService>(
-          create: (BuildContext context) => providerAuthenticationApiService(
+          create: (BuildContext context) => authenticationApiServiceProvider(
             Provider.of(context, listen: false),
             Provider.of(context, listen: false),
           )),
