@@ -34,7 +34,7 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
 
   void loginSuccess(BuildContext context) async {
     Provider.of<AppDialogService>(context, listen: false).showLoading(context, text: 'Loading...');
-    await viewModel.callLoginApi('hiennguyen92', '12345678');
+    await viewModel.callLoginApi(viewModel.state.username!, viewModel.state.password!);
     Provider.of<AppDialogService>(context, listen: false)
         .hideAppDialog(force: true);
   }
@@ -80,7 +80,7 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
                             children: <Widget>[
                               TextFormField(
                                 focusNode: focusUserNode,
-                                initialValue: 'hiennguyen92',
+                                initialValue: 'hien@hiennv.com',
                                 decoration: InputDecoration(
                                     filled: true,
                                     fillColor: Colors.transparent,
@@ -106,7 +106,7 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
                               SizedBox(height: 15),
                               TextFormField(
                                   focusNode: focusPassNode,
-                                  initialValue: '12345678',
+                                  initialValue: '123456',
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.transparent,

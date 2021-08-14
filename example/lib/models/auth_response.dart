@@ -1,0 +1,40 @@
+import 'package:flutter_hiennv/models/base_response.dart';
+import 'package:flutter_hiennv/models/token.dart';
+import 'package:flutter_hiennv_example/models/error.dart';
+import 'package:flutter_hiennv_example/models/user.dart';
+
+class AuthResponse extends BaseResponse<Token, Error> {
+  AuthResponse(Map<String, dynamic> json) : super(json);
+
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(json);
+  }
+
+
+
+  @override
+  String toString() {
+    print(super.toString());
+    return 'UserResponse{ data: $data, error: $error }';
+  }
+
+  @override
+  Token? convertData(dataJson, raw) {
+    print('convertData $dataJson');
+    print('convertData $raw');
+    if (raw != null) {
+      return Token.fromData(raw['accessToken'], raw['accessToken'], raw['user']);
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Error? convertError(dataError, raw) {
+    if(dataError != null){
+      Error error = Error(dataError['code'], dataError['message']);
+      return error;
+    }
+    return null;
+  }
+}

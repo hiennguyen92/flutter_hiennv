@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info/device_info.dart';
@@ -5,7 +6,6 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_hiennv/services/network/api_callback.dart';
 import 'package:flutter_hiennv/services/network/network_config.dart';
-
 
 class NetworkService {
   final NetworkConfig _networkConfig;
@@ -59,6 +59,27 @@ class NetworkService {
     }
   }
 
+  Dio? get instance => _dio;
+
+  String getValidPath(String? baseUrl, String? path) {
+    if (path == null || path.isEmpty) return baseUrl ?? '';
+    RegExp regExp = new RegExp(
+      r"/^((http|https):\/\/)/",
+      caseSensitive: false,
+      multiLine: false,
+    );
+    if (regExp.hasMatch(path)) return path;
+    if (baseUrl != null) {
+      if (baseUrl.endsWith('/') && path.startsWith('/')){
+        if (baseUrl.length > 0) {
+          baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+        }
+      }
+      return '$baseUrl/$path';
+    }
+    return '$baseUrl/$path';
+  }
+
   Future<Map<String, dynamic>> get(String path,
       {String? baseUrl,
       Map<String, dynamic>? queryParameters,
@@ -68,21 +89,22 @@ class NetworkService {
       String? dataKey = 'data',
       String? errorKey = 'error'}) async {
     apiCallback?.onStart(path);
-    if (_dio == null) {
-      await _initDio(_networkConfig);
-    }
-    if (baseUrl != null && baseUrl.isNotEmpty) {
-      path = '$baseUrl/$path';
-    }
     try {
-      Response<Map<String, dynamic>> response = await _dio!.get<Map<String, dynamic>>(path,
-          queryParameters: queryParameters,
-          options: options,
-          cancelToken: cancelToken,
-          onReceiveProgress: apiCallback?.onReceiveProgress);
+      if (_dio == null) {
+        await _initDio(_networkConfig);
+      }
+      path = getValidPath(baseUrl, path);
+      Response<Map<String, dynamic>> response =
+          await _dio!.get<Map<String, dynamic>>(path,
+              queryParameters: queryParameters,
+              options: options,
+              cancelToken: cancelToken,
+              onReceiveProgress: apiCallback?.onReceiveProgress);
 
-      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
-          dataKey: dataKey, errorKey: errorKey);
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(
+          response.data,
+          dataKey: dataKey,
+          errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
@@ -102,22 +124,23 @@ class NetworkService {
       String? dataKey = 'data',
       String? errorKey = 'error'}) async {
     apiCallback?.onStart(path);
-    if (_dio == null) {
-      await _initDio(_networkConfig);
-    }
-    if (baseUrl != null && baseUrl.isNotEmpty) {
-      path = '$baseUrl/$path';
-    }
     try {
-      Response<Map<String, dynamic>> response = await _dio!.post<Map<String, dynamic>>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-          cancelToken: cancelToken,
-          onSendProgress: apiCallback?.onSendProgress,
-          onReceiveProgress: apiCallback?.onReceiveProgress);
-      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
-          dataKey: dataKey, errorKey: errorKey);
+      if (_dio == null) {
+        await _initDio(_networkConfig);
+      }
+      path = getValidPath(baseUrl, path);
+      Response<Map<String, dynamic>> response =
+          await _dio!.post<Map<String, dynamic>>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: options,
+              cancelToken: cancelToken,
+              onSendProgress: apiCallback?.onSendProgress,
+              onReceiveProgress: apiCallback?.onReceiveProgress);
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(
+          response.data,
+          dataKey: dataKey,
+          errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
@@ -137,22 +160,23 @@ class NetworkService {
       String? dataKey = 'data',
       String? errorKey = 'error'}) async {
     apiCallback?.onStart(path);
-    if (_dio == null) {
-      await _initDio(_networkConfig);
-    }
-    if (baseUrl != null && baseUrl.isNotEmpty) {
-      path = '$baseUrl/$path';
-    }
     try {
-      Response<Map<String, dynamic>> response = await _dio!.put<Map<String, dynamic>>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-          cancelToken: cancelToken,
-          onSendProgress: apiCallback?.onSendProgress,
-          onReceiveProgress: apiCallback?.onReceiveProgress);
-      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
-          dataKey: dataKey, errorKey: errorKey);
+      if (_dio == null) {
+        await _initDio(_networkConfig);
+      }
+      path = getValidPath(baseUrl, path);
+      Response<Map<String, dynamic>> response =
+          await _dio!.put<Map<String, dynamic>>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: options,
+              cancelToken: cancelToken,
+              onSendProgress: apiCallback?.onSendProgress,
+              onReceiveProgress: apiCallback?.onReceiveProgress);
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(
+          response.data,
+          dataKey: dataKey,
+          errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
@@ -172,22 +196,23 @@ class NetworkService {
       String? dataKey = 'data',
       String? errorKey = 'error'}) async {
     apiCallback?.onStart(path);
-    if (_dio == null) {
-      await _initDio(_networkConfig);
-    }
-    if (baseUrl != null && baseUrl.isNotEmpty) {
-      path = '$baseUrl/$path';
-    }
     try {
-      Response<Map<String, dynamic>> response = await _dio!.patch<Map<String, dynamic>>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-          cancelToken: cancelToken,
-          onSendProgress: apiCallback?.onSendProgress,
-          onReceiveProgress: apiCallback?.onReceiveProgress);
-      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
-          dataKey: dataKey, errorKey: errorKey);
+      if (_dio == null) {
+        await _initDio(_networkConfig);
+      }
+      path = getValidPath(baseUrl, path);
+      Response<Map<String, dynamic>> response =
+          await _dio!.patch<Map<String, dynamic>>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: options,
+              cancelToken: cancelToken,
+              onSendProgress: apiCallback?.onSendProgress,
+              onReceiveProgress: apiCallback?.onReceiveProgress);
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(
+          response.data,
+          dataKey: dataKey,
+          errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
@@ -207,20 +232,21 @@ class NetworkService {
       String? dataKey = 'data',
       String? errorKey = 'error'}) async {
     apiCallback?.onStart(path);
-    if (_dio == null) {
-      await _initDio(_networkConfig);
-    }
-    if (baseUrl != null && baseUrl.isNotEmpty) {
-      path = '$baseUrl/$path';
-    }
     try {
-      Response<Map<String, dynamic>> response = await _dio!.delete<Map<String, dynamic>>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-          cancelToken: cancelToken);
-      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
-          dataKey: dataKey, errorKey: errorKey);
+      if (_dio == null) {
+        await _initDio(_networkConfig);
+      }
+      path = getValidPath(baseUrl, path);
+      Response<Map<String, dynamic>> response =
+          await _dio!.delete<Map<String, dynamic>>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: options,
+              cancelToken: cancelToken);
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(
+          response.data,
+          dataKey: dataKey,
+          errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
@@ -240,20 +266,21 @@ class NetworkService {
       String? dataKey = 'data',
       String? errorKey = 'error'}) async {
     apiCallback?.onStart(path);
-    if (_dio == null) {
-      await _initDio(_networkConfig);
-    }
-    if (baseUrl != null && baseUrl.isNotEmpty) {
-      path = '$baseUrl/$path';
-    }
     try {
-      Response<Map<String, dynamic>> response = await _dio!.head<Map<String, dynamic>>(path,
-          data: data,
-          queryParameters: queryParameters,
-          options: options,
-          cancelToken: cancelToken);
-      Map<String, dynamic> responseSuccess = _buildResponseSuccess(response.data,
-          dataKey: dataKey, errorKey: errorKey);
+      if (_dio == null) {
+        await _initDio(_networkConfig);
+      }
+      path = getValidPath(baseUrl, path);
+      Response<Map<String, dynamic>> response =
+          await _dio!.head<Map<String, dynamic>>(path,
+              data: data,
+              queryParameters: queryParameters,
+              options: options,
+              cancelToken: cancelToken);
+      Map<String, dynamic> responseSuccess = _buildResponseSuccess(
+          response.data,
+          dataKey: dataKey,
+          errorKey: errorKey);
       apiCallback?.onCompleted(path, responseSuccess);
       return responseSuccess;
     } catch (error) {
@@ -266,10 +293,6 @@ class NetworkService {
   Map<String, dynamic> _buildResponseSuccess(json,
       {String? dataKey = 'data', String? errorKey = 'error'}) {
     dynamic rawData, rawError;
-
-    print('test is Map: ${json is Map}');
-    print('test is String: ${json is String}');
-
     if ((json is Map) && dataKey != null) {
       rawData = json[dataKey];
     } else {

@@ -13,14 +13,14 @@ abstract class AuthenticationApiService extends BaseChangeNotifier{
 
   AuthenticationApiService(this._networkService, this._authInfo);
 
-  Future<Token> register(
+  Future<Token?> register(
       Map<String, dynamic> info, ApiCallback? apiCallback);
 
-  Future<Token> login(
+  Future<Token?> login(
       String email, String password, ApiCallback? apiCallback);
 
-  Future<Token> loginWithSocial(
+  Future<Token?> loginWithSocial(
       String token, String provider, ApiCallback? apiCallback);
-  Future<Token> loginWithCustom(
+  Future<Token?> loginWithCustom(
       Map<String, dynamic> data, ApiCallback? apiCallback);
 }

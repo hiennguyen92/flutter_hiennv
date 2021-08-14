@@ -52,5 +52,10 @@ class Application extends BaseApplication<AppRoute> {
     return AuthenticationApiServiceImplement(networkService, authInfo);
   }
 
+  @override
+  void afterOpenAppHasAuthInfo(BuildContext context, AuthInfo authInfo) {
+    print('OK: $authInfo');
+  }
+
 
 }

@@ -13,10 +13,21 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
+
+  late final T appRoute;
+  late final AppNavigationService navigationService;
+
   @override
   Widget build(BuildContext context) {
-    final T appRoute = Provider.of<T>(context, listen: false);
-    final AppNavigationService navigationService =
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      AuthInfo authInfo = Provider.of<AuthInfo>(context, listen: false);
+      final bool isHasAuthInfo = await authInfo.load();
+      if (isHasAuthInfo) {
+        afterOpenAppHasAuthInfo(context, authInfo);
+      }
+    });
+    appRoute = Provider.of<T>(context, listen: false);
+    navigationService =
         Provider.of<AppNavigationService>(context, listen: false);
     return ScreenUtilInit(
         designSize: designSize,
@@ -29,12 +40,14 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
   Size get designSize => Size(375, 812);
 
   @protected
+  void afterOpenAppHasAuthInfo(BuildContext context, AuthInfo authInfo);
+
+  @protected
   Widget getApp(
       BuildContext context, T appRoute, AppNavigationService navigationService);
 
   @protected
   T providerAppRoute();
-
 
   @protected
   AuthenticationApiService providerAuthenticationApiService(NetworkService networkService, AuthInfo authInfo);

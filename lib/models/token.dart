@@ -11,6 +11,12 @@ class Token {
     extra: json['extra'],
   );
 
+  factory Token.fromData(String accessToken, String? refreshToken, dynamic extra) => Token(
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+    extra: extra,
+  );
+
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'accessToken': accessToken,

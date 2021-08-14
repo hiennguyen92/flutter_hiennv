@@ -17,7 +17,7 @@ class AuthenticationService extends BaseChangeNotifier {
 
   Future<void> login(
       String email, String password, ApiCallback? apiCallback) async {
-    Token token = await authenticationApiService.login(email, password, apiCallback);
+    Token? token = await authenticationApiService.login(email, password, apiCallback);
     authInfo.save(token);
   }
 
