@@ -1,7 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 
-
 abstract class BaseResponse<T, E> {
   dynamic _raw;
   T? _data;
@@ -18,9 +17,12 @@ abstract class BaseResponse<T, E> {
     }
   }
 
-
-  bool hasError(){
+  bool hasError() {
     return error != null;
+  }
+
+  bool isSuccessful() {
+    return !hasError();
   }
 
   @protected

@@ -2,9 +2,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_hiennv/base/auth_view_model.dart';
 import 'package:flutter_hiennv/base/base_view_state.dart';
 import 'package:flutter_hiennv/services/network/api_callback.dart';
+import 'package:flutter_hiennv_example/app_route.dart';
 import 'package:flutter_hiennv_example/models/auth_response.dart';
 
-class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback<AuthResponse> {
+
+class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback {
 
 
   LoginViewModel(BuildContext context) : super(context, LoginViewState());
@@ -32,9 +34,23 @@ class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback<Auth
   }
 
   @override
+  Future<void> onSendProgress(String path, int progress, int total) async {
+    print('onSendProgress: $path-$progress-$total');
+  }
+
+  @override
+  Future<void> onReceiveProgress(String path, int progress, int total) async {
+    print('onReceiveProgress: $path-$progress-$total');
+  }
+
+  @override
   Future<void> onCompleted(String path, response) async {
     isLoading = false;
     appDialogService.hideLoading(force: true);
+    AuthResponse authResponse = AuthResponse.fromJson(response);
+    if(authResponse.isSuccessful()){
+      appNavigationService.pushNamedAndRemoveUntil(AppRoute.homeScreen);
+    }
   }
 
   @override

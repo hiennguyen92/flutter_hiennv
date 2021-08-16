@@ -12,44 +12,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
-
-  late final T appRoute;
-  late final AppNavigationService navigationService;
-
-  @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
-      AuthInfo authInfo = Provider.of<AuthInfo>(context, listen: false);
-      final bool isHasAuthInfo = await authInfo.load();
-      if (isHasAuthInfo) {
-        afterOpenAppHasAuthInfo(context, authInfo);
-      }
-    });
-    appRoute = Provider.of<T>(context, listen: false);
-    navigationService =
-        Provider.of<AppNavigationService>(context, listen: false);
-    return ScreenUtilInit(
-        designSize: designSize,
-        builder: () {
-          return getApp(context);
-        });
-  }
-
-  @protected
-  Size get designSize => Size(375, 812);
-
-  @protected
-  void afterOpenAppHasAuthInfo(BuildContext context, AuthInfo authInfo);
-
-  @protected
-  Widget getApp(BuildContext context);
+abstract class BaseApplication<T extends BaseAppRoute> extends StatefulWidget {
+  const BaseApplication({Key? key}) : super(key: key);
 
   @protected
   T appRouteProvider();
 
   @protected
-  AuthenticationApiService authenticationApiServiceProvider(NetworkService networkService, AuthInfo authInfo);
+  AuthenticationApiService authenticationApiServiceProvider(
+      NetworkService networkService, AuthInfo authInfo);
+
+  @protected
+  NetworkConfig networkConfigProvider() {
+    return NetworkConfig();
+  }
 
   List<SingleChildWidget> getBaseProviders() {
     return <SingleChildWidget>[
@@ -65,15 +41,44 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatelessWidget {
               )),
       ChangeNotifierProvider<AuthenticationApiService>(
           create: (BuildContext context) => authenticationApiServiceProvider(
-            Provider.of(context, listen: false),
-            Provider.of(context, listen: false),
-          )),
+                Provider.of(context, listen: false),
+                Provider.of(context, listen: false),
+              )),
       ChangeNotifierProvider<AuthenticationService>(
           create: (BuildContext context) => AuthenticationService(
                 Provider.of(context, listen: false),
                 Provider.of(context, listen: false),
               )),
-
     ];
   }
+}
+
+abstract class BaseApplicationState<E extends StatefulWidget, T extends BaseAppRoute> extends State<E> {
+  late final T appRoute = Provider.of<T>(context, listen: false);
+  late final AppNavigationService navigationService = Provider.of<AppNavigationService>(context, listen: false);
+
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+      AuthInfo authInfo = Provider.of<AuthInfo>(context, listen: false);
+      final bool isHasAuthInfo = await authInfo.load();
+      if (isHasAuthInfo) {
+        afterOpenAppHasAuthInfo(context, authInfo);
+      }
+    });
+    return ScreenUtilInit(
+        designSize: designSize,
+        builder: () {
+          return getApp(context);
+        });
+  }
+
+  @protected
+  Size get designSize => Size(375, 812);
+
+  @protected
+  void afterOpenAppHasAuthInfo(BuildContext context, AuthInfo authInfo);
+
+  @protected
+  Widget getApp(BuildContext context);
 }

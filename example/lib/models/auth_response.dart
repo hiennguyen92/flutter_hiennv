@@ -20,10 +20,8 @@ class AuthResponse extends BaseResponse<Token, Error> {
 
   @override
   Token? convertData(dataJson, raw) {
-    print('convertData $dataJson');
-    print('convertData $raw');
     if (raw != null) {
-      return Token.fromData(raw['accessToken'], raw['accessToken'], raw['user']);
+      return Token.fromData(raw['accessToken'], null, raw['user']);
     } else {
       return null;
     }
@@ -32,7 +30,7 @@ class AuthResponse extends BaseResponse<Token, Error> {
   @override
   Error? convertError(dataError, raw) {
     if(dataError != null){
-      Error error = Error(dataError['code'], dataError['message']);
+      Error error = Error(dataError['code'], dataError['message'], raw: raw);
       return error;
     }
     return null;

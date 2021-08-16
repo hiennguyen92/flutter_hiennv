@@ -1,10 +1,12 @@
 
 
-mixin ApiCallback<T> {
-  Future<void> onStart(String path);
-  Future<void> onCompleted(String path, dynamic response);
-  Future<void> onCompletedFinally(String path, T response);
+import 'package:flutter_hiennv/models/base_response.dart';
 
-  Future<void> onReceiveProgress(int progress, int total) async {}
-  Future<void> onSendProgress(int progress, int total) async {}
+mixin ApiCallback {
+  Future<void> onStart(String path);
+  Future<void> onCompleted(String path, Map<String, dynamic> response);
+
+
+  Future<void> onReceiveProgress(String path, int progress, int total) async {}
+  Future<void> onSendProgress(String path, int progress, int total) async {}
 }

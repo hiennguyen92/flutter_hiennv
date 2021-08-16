@@ -70,7 +70,7 @@ class NetworkService {
     );
     if (regExp.hasMatch(path)) return path;
     if (baseUrl != null) {
-      if (baseUrl.endsWith('/') && path.startsWith('/')){
+      if (baseUrl.endsWith('/') && path.startsWith('/')) {
         if (baseUrl.length > 0) {
           baseUrl = baseUrl.substring(0, baseUrl.length - 1);
         }
@@ -94,12 +94,13 @@ class NetworkService {
         await _initDio(_networkConfig);
       }
       path = getValidPath(baseUrl, path);
-      Response<Map<String, dynamic>> response =
-          await _dio!.get<Map<String, dynamic>>(path,
+      Response<Map<String, dynamic>> response = await _dio!
+          .get<Map<String, dynamic>>(path,
               queryParameters: queryParameters,
               options: options,
               cancelToken: cancelToken,
-              onReceiveProgress: apiCallback?.onReceiveProgress);
+              onReceiveProgress: (count, total) =>
+                  apiCallback?.onReceiveProgress(path, count, total));
 
       Map<String, dynamic> responseSuccess = _buildResponseSuccess(
           response.data,
@@ -129,14 +130,16 @@ class NetworkService {
         await _initDio(_networkConfig);
       }
       path = getValidPath(baseUrl, path);
-      Response<Map<String, dynamic>> response =
-          await _dio!.post<Map<String, dynamic>>(path,
+      Response<Map<String, dynamic>> response = await _dio!
+          .post<Map<String, dynamic>>(path,
               data: data,
               queryParameters: queryParameters,
               options: options,
               cancelToken: cancelToken,
-              onSendProgress: apiCallback?.onSendProgress,
-              onReceiveProgress: apiCallback?.onReceiveProgress);
+              onSendProgress: (count, total) =>
+                  apiCallback?.onSendProgress(path, count, total),
+              onReceiveProgress: (count, total) =>
+                  apiCallback?.onReceiveProgress(path, count, total));
       Map<String, dynamic> responseSuccess = _buildResponseSuccess(
           response.data,
           dataKey: dataKey,
@@ -165,14 +168,16 @@ class NetworkService {
         await _initDio(_networkConfig);
       }
       path = getValidPath(baseUrl, path);
-      Response<Map<String, dynamic>> response =
-          await _dio!.put<Map<String, dynamic>>(path,
+      Response<Map<String, dynamic>> response = await _dio!
+          .put<Map<String, dynamic>>(path,
               data: data,
               queryParameters: queryParameters,
               options: options,
               cancelToken: cancelToken,
-              onSendProgress: apiCallback?.onSendProgress,
-              onReceiveProgress: apiCallback?.onReceiveProgress);
+              onSendProgress: (count, total) =>
+                  apiCallback?.onSendProgress(path, count, total),
+              onReceiveProgress: (count, total) =>
+                  apiCallback?.onReceiveProgress(path, count, total));
       Map<String, dynamic> responseSuccess = _buildResponseSuccess(
           response.data,
           dataKey: dataKey,
@@ -201,14 +206,17 @@ class NetworkService {
         await _initDio(_networkConfig);
       }
       path = getValidPath(baseUrl, path);
-      Response<Map<String, dynamic>> response =
-          await _dio!.patch<Map<String, dynamic>>(path,
+      Response<Map<String, dynamic>> response = await _dio!
+          .patch<Map<String, dynamic>>(
+              path,
               data: data,
               queryParameters: queryParameters,
               options: options,
               cancelToken: cancelToken,
-              onSendProgress: apiCallback?.onSendProgress,
-              onReceiveProgress: apiCallback?.onReceiveProgress);
+              onSendProgress: (count, total) =>
+                  apiCallback?.onSendProgress(path, count, total),
+              onReceiveProgress: (count, total) =>
+                  apiCallback?.onReceiveProgress(path, count, total));
       Map<String, dynamic> responseSuccess = _buildResponseSuccess(
           response.data,
           dataKey: dataKey,
@@ -237,8 +245,8 @@ class NetworkService {
         await _initDio(_networkConfig);
       }
       path = getValidPath(baseUrl, path);
-      Response<Map<String, dynamic>> response =
-          await _dio!.delete<Map<String, dynamic>>(path,
+      Response<Map<String, dynamic>> response = await _dio!
+          .delete<Map<String, dynamic>>(path,
               data: data,
               queryParameters: queryParameters,
               options: options,
@@ -271,8 +279,8 @@ class NetworkService {
         await _initDio(_networkConfig);
       }
       path = getValidPath(baseUrl, path);
-      Response<Map<String, dynamic>> response =
-          await _dio!.head<Map<String, dynamic>>(path,
+      Response<Map<String, dynamic>> response = await _dio!
+          .head<Map<String, dynamic>>(path,
               data: data,
               queryParameters: queryParameters,
               options: options,

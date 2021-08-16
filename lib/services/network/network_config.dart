@@ -1,5 +1,5 @@
 class NetworkConfig {
-  String baseUrl = 'https://google.com';
+  String baseUrl = '';
 
   String? httpProxy;
 

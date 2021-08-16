@@ -37,7 +37,7 @@ extension ProviderExt on BuildContext {
 extension MapJsonExt on Map<String, dynamic> {
   int getInt(String key, {int defaultValue = 0}) {
     return this[key] != null
-        ? (int.tryParse(this[key]) ?? defaultValue)
+        ? (int.tryParse(this[key].toString()) ?? defaultValue)
         : defaultValue;
   }
 
@@ -47,7 +47,7 @@ extension MapJsonExt on Map<String, dynamic> {
 
   double getDouble(String key, {double defaultValue = 0.0}) {
     return this[key] != null
-        ? (double.tryParse(this[key]) ?? defaultValue)
+        ? (double.tryParse(this[key].toString()) ?? defaultValue)
         : defaultValue;
   }
 }
