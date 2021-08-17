@@ -10,8 +10,6 @@ class AuthResponse extends BaseResponse<Token, Error> {
     return AuthResponse(json);
   }
 
-
-
   @override
   String toString() {
     print(super.toString());
@@ -29,7 +27,7 @@ class AuthResponse extends BaseResponse<Token, Error> {
 
   @override
   Error? convertError(dataError, raw) {
-    if(dataError != null){
+    if (dataError != null) {
       Error error = Error(dataError['code'], dataError['message'], raw: raw);
       return error;
     }

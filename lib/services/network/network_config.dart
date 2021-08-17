@@ -18,5 +18,4 @@ class NetworkConfig {
   int? receiveTimeout = 5000;
 
   int? connectTimeout = 30000;
-
 }

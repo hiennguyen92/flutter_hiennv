@@ -5,21 +5,16 @@ import 'package:flutter_hiennv/services/network/api_callback.dart';
 import 'package:flutter_hiennv_example/app_route.dart';
 import 'package:flutter_hiennv_example/models/auth_response.dart';
 
-
 class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback {
-
-
   LoginViewModel(BuildContext context) : super(context, LoginViewState());
-
 
   Future<void> callLoginApi(String username, String password) async {
     await authenticationService.login(username, password, this);
   }
 
-
   String? usernameValidator(value) {
     state.username = value;
-    if(!state.usernameIsValid()){
+    if (!state.usernameIsValid()) {
       return 'Please enter username';
     }
     return null;
@@ -27,7 +22,7 @@ class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback {
 
   String? passwordValidator(value) {
     state.password = value;
-    if(!state.passwordIsValid()){
+    if (!state.passwordIsValid()) {
       return 'Please enter password';
     }
     return null;
@@ -48,7 +43,7 @@ class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback {
     isLoading = false;
     appDialogService.hideLoading(force: true);
     AuthResponse authResponse = AuthResponse.fromJson(response);
-    if(authResponse.isSuccessful()){
+    if (authResponse.isSuccessful()) {
       appNavigationService.pushNamedAndRemoveUntil(AppRoute.homeScreen);
     }
   }
@@ -58,8 +53,6 @@ class LoginViewModel extends AuthViewModel<LoginViewState> with ApiCallback {
     isLoading = true;
     appDialogService.showLoading(context, text: "Loading...");
   }
-
-
 }
 
 class LoginViewState extends BaseViewState {
@@ -80,5 +73,4 @@ class LoginViewState extends BaseViewState {
     }
     return true;
   }
-
 }

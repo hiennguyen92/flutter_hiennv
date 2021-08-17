@@ -31,7 +31,6 @@ extension ProviderExt on BuildContext {
   AuthInfo authInfo() {
     return Provider.of<AuthInfo>(this, listen: false);
   }
-
 }
 
 extension MapJsonExt on Map<String, dynamic> {

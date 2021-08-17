@@ -23,7 +23,7 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatefulWidget {
       NetworkService networkService, AuthInfo authInfo);
 
   @protected
-  NetworkConfig networkConfig(){
+  NetworkConfig networkConfig() {
     return NetworkConfig();
   }
 

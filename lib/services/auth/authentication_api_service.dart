@@ -21,11 +21,13 @@ abstract class AuthenticationApiService extends BaseChangeNotifier {
     return Options(headers: header, contentType: contentType);
   }
 
-
   Future<Options> buildAuthHeaderOptions({String? contentType}) async {
-    final Options headerOptions = await buildHeaderOptions(contentType: contentType);
+    final Options headerOptions =
+        await buildHeaderOptions(contentType: contentType);
     if (authInfo.token != null) {
-      headerOptions.headers?.addAll(<String, String>{'Authorization': 'Bearer ${authInfo.token?.accessToken}'});
+      headerOptions.headers?.addAll(<String, String>{
+        'Authorization': 'Bearer ${authInfo.token?.accessToken}'
+      });
     }
     return headerOptions;
   }

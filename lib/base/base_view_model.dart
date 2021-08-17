@@ -9,13 +9,15 @@ import 'package:flutter_hiennv/services/ui/app_navigation_service.dart';
 import 'package:flutter_hiennv/utils/extension.dart';
 import 'package:flutter_hiennv/services/network/network_service.dart';
 
-abstract class BaseViewModel<T extends BaseViewState> extends BaseChangeNotifier {
-
+abstract class BaseViewModel<T extends BaseViewState>
+    extends BaseChangeNotifier {
   BuildContext context;
   late NetworkService _networkService = context.networkService();
   late AppDialogService _appDialogService = context.appDialogService();
-  late AppNavigationService _appNavigationService = context.appNavigationService();
-  late AuthenticationService _authenticationService = context.authenticationService();
+  late AppNavigationService _appNavigationService =
+      context.appNavigationService();
+  late AuthenticationService _authenticationService =
+      context.authenticationService();
   late CacheService _cacheService = context.cacheService();
   late AuthInfo _authInfo = context.authInfo();
   bool _isLoading = false;
@@ -38,5 +40,4 @@ abstract class BaseViewModel<T extends BaseViewState> extends BaseChangeNotifier
   }
 
   BaseViewModel(this.context, this._state);
-
 }

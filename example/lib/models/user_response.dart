@@ -11,8 +11,6 @@ class UserResponse extends BaseResponse<User, Map<String, dynamic>> {
     return UserResponse(json);
   }
 
-
-
   @override
   String toString() {
     print(super.toString());
@@ -21,11 +19,11 @@ class UserResponse extends BaseResponse<User, Map<String, dynamic>> {
 
   @override
   User? convertData(dataJson, raw) {
-      if (dataJson != null) {
-        return User.fromJson(dataJson);
-      } else {
-        return null;
-      }
+    if (dataJson != null) {
+      return User.fromJson(dataJson);
+    } else {
+      return null;
+    }
   }
 
   @override

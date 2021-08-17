@@ -1,13 +1,11 @@
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheService {
-
   Future<bool> save<T>(String key, T value) async {
     // Get SharedPreferences
     SharedPreferences refs = await SharedPreferences.getInstance();
 
-    if(value == null){
+    if (value == null) {
       refs.remove(key);
       return true;
     }
@@ -39,5 +37,4 @@ class CacheService {
     SharedPreferences ref = await SharedPreferences.getInstance();
     return ref.clear();
   }
-
 }

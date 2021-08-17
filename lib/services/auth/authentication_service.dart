@@ -40,5 +40,4 @@ class AuthenticationService extends BaseChangeNotifier {
     Token? token = await authenticationApiService.register(info, apiCallback);
     authInfo.save(token);
   }
-
 }

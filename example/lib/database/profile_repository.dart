@@ -50,6 +50,6 @@ class ProfileRepository
   @override
   Future<void> clear() async {
     final db = await databaseProvider.get();
-    db!.execute("delete from "+ profileDao.tableName);
+    db!.execute("delete from " + profileDao.tableName);
   }
 }

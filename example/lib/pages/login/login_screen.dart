@@ -32,16 +32,9 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
     );
   }
 
-  void loginSuccess(BuildContext context) async {
-    await viewModel.callLoginApi(viewModel.state.username!, viewModel.state.password!);
-  }
-
-  void loginFail(BuildContext context) async {
-    Provider.of<AppDialogService>(context, listen: false).showLoading(context, text: 'Loading...');
+  void login(BuildContext context) async {
     await viewModel.callLoginApi(
-        'hiennguyen92', '12345678s');
-    Provider.of<AppDialogService>(context, listen: false)
-        .hideAppDialog(force: true);
+        viewModel.state.username!, viewModel.state.password!);
   }
 
   Widget buildPageBody(BuildContext context) {
@@ -140,28 +133,10 @@ class _LoginScreenState extends BaseStateful<LoginScreen, LoginViewModel> {
                                 ),
                                 onPressed: () {
                                   if (_formGlobalKey.currentState!.validate()) {
-                                    loginSuccess(context);
+                                    login(context);
                                   }
                                 },
                                 child: Text('Login'),
-                              ),
-                              SizedBox(height: 10),
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  overlayColor:
-                                      MaterialStateProperty.resolveWith<Color>(
-                                          (Set<MaterialState> states) {
-                                    if (states.contains(MaterialState.focused))
-                                      return Colors.red;
-                                    return Colors.blue;
-                                  }),
-                                ),
-                                onPressed: () async {
-                                  if (_formGlobalKey.currentState!.validate()) {
-                                    loginFail(context);
-                                  }
-                                },
-                                child: Text('Login Fail'),
                               ),
                               Selector<LoginViewModel, int>(
                                 selector: (_, provider) =>

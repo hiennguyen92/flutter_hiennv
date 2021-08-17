@@ -32,12 +32,11 @@ class HomeViewModel extends BaseViewModel<HomeViewState> with ApiCallback {
       notifyListeners();
     } else {
       Error? error = profileResponse.error;
-      if(error != null && error.code == 401 && error.raw == 'jwt expired'){
+      if (error != null && error.code == 401 && error.raw == 'jwt expired') {
         Fluttertoast.showToast(
             msg: error.message,
             toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER
-        );
+            gravity: ToastGravity.CENTER);
         logout();
       }
     }
@@ -72,5 +71,4 @@ class HomeViewState extends BaseViewState {
   int counter = 0;
 
   Profile? profile;
-
 }

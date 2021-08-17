@@ -4,8 +4,6 @@ import 'package:flutter_hiennv/models/token.dart';
 import 'package:flutter_hiennv/services/cache/cache_service.dart';
 
 class AuthInfo extends BaseChangeNotifier {
-
-
   final CacheService _cacheService;
 
   Token? _token;
@@ -44,5 +42,4 @@ class AuthInfo extends BaseChangeNotifier {
     notifyListeners();
     return isCleared;
   }
-
 }

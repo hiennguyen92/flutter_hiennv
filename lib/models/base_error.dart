@@ -5,5 +5,4 @@ abstract class BaseError {
   String? raw;
 
   BaseError(this.code, this.message, this.raw);
-
 }

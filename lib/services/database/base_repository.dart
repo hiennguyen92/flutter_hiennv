@@ -1,8 +1,8 @@
 import 'package:flutter_hiennv/models/base_model.dart';
 import 'package:flutter_hiennv/services/database/base_database_provider.dart';
 
-abstract class BaseRepository<T extends BaseDatabaseProvider, E extends BaseModel> {
-
+abstract class BaseRepository<T extends BaseDatabaseProvider,
+    E extends BaseModel> {
   T databaseProvider;
 
   BaseRepository(this.databaseProvider);
@@ -18,5 +18,4 @@ abstract class BaseRepository<T extends BaseDatabaseProvider, E extends BaseMode
   Future<E?> get(int id);
 
   Future<void> clear();
-
 }

@@ -112,7 +112,6 @@ class AppDialogService {
       double? sizeSpin,
       String? text,
       TextStyle? textStyle}) async {
-
     final children = <Widget>[
       SpinKitRing(
         lineWidth: 3.0,
@@ -121,13 +120,14 @@ class AppDialogService {
         size: sizeSpin ?? 40.0,
       )
     ];
-    if(text != null && text.isNotEmpty){
+    if (text != null && text.isNotEmpty) {
       children.addAll(<Widget>[
         SizedBox(height: 10.0),
-        Text(text, overflow: TextOverflow.ellipsis, style: textStyle ?? regularTextStyle())
+        Text(text,
+            overflow: TextOverflow.ellipsis,
+            style: textStyle ?? regularTextStyle())
       ]);
     }
-
 
     showCustomDialog(
         context,

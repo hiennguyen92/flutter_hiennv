@@ -1,3 +1,9 @@
+## [1.0.0+1] - Aug 18, 2021.
+
+* add database service
+* add app config
+* restructure
+* update example
 
 ## [0.0.1+4] - Aug 09, 2021.
 

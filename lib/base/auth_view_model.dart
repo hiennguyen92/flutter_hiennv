@@ -5,12 +5,10 @@ import 'package:flutter_hiennv/utils/extension.dart';
 import 'package:flutter_hiennv/services/auth/authentication_service.dart';
 
 abstract class AuthViewModel<T extends BaseViewState> extends BaseViewModel<T> {
-
-  late AuthenticationService _authenticationService = context.authenticationService();
+  late AuthenticationService _authenticationService =
+      context.authenticationService();
 
   AuthenticationService get authenticationService => _authenticationService;
 
-  AuthViewModel(BuildContext context, T state)
-      : super(context, state);
-
+  AuthViewModel(BuildContext context, T state) : super(context, state);
 }

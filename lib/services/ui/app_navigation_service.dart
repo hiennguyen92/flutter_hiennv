@@ -10,7 +10,6 @@ class AppNavigationService {
   /// App route observer
   RouteObserver<Route<dynamic>> routeObserver = RouteObserver<Route<dynamic>>();
 
-
   static final AppNavigationService _instance = AppNavigationService._private();
   factory AppNavigationService() {
     return _instance;
@@ -86,12 +85,10 @@ class AppNavigationService {
   /// Whether the navigator can be popped.
   bool canPop() => navigationKey.currentState!.canPop();
 
-
   /// Pop the top-most route off the navigator.
   void goBack<T extends Object>({T? result}) {
     navigationKey.currentState?.pop<T>(result);
   }
-
 
   /// Calls [pop] repeatedly until the predicate returns true.
   void popUntil(String route) {

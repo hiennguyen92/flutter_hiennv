@@ -13,16 +13,15 @@ class AuthenticationApiServiceImplement extends AuthenticationApiService {
   @override
   Future<Token?> login(
       String username, String password, ApiCallback? apiCallback) async {
-
     Map<String, dynamic> json = await networkService.post('login',
         data: <String, dynamic>{'email': username, 'password': password},
         apiCallback: apiCallback);
     print('login: $json');
     AuthResponse authResponse = AuthResponse.fromJson(json);
     //TODO: Custom json token
-    if(authResponse.hasError()){
+    if (authResponse.hasError()) {
       return null;
-    }else {
+    } else {
       return authResponse.data;
     }
   }
@@ -42,8 +41,7 @@ class AuthenticationApiServiceImplement extends AuthenticationApiService {
   }
 
   @override
-  Future<Token?> register(
-      Map<String, dynamic> info, ApiCallback? apiCallback) {
+  Future<Token?> register(Map<String, dynamic> info, ApiCallback? apiCallback) {
     // TODO: implement register
     throw UnimplementedError();
   }
