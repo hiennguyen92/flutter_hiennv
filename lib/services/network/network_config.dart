@@ -1,5 +1,13 @@
 class NetworkConfig {
-  String baseUrl = '';
+  NetworkConfig(
+      {this.baseUrl,
+      this.httpProxy,
+      this.httpProxyPort,
+      this.contentType,
+      this.receiveTimeout,
+      this.connectTimeout});
+
+  String? baseUrl;
 
   String? httpProxy;
 
@@ -11,5 +19,4 @@ class NetworkConfig {
 
   int? connectTimeout = 30000;
 
-  bool isShowHttpLog = true;
 }

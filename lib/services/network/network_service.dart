@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_hiennv/services/network/api_callback.dart';
 import 'package:flutter_hiennv/services/network/network_config.dart';
 
@@ -26,8 +27,9 @@ class NetworkService {
     } else if (Platform.isIOS) {
       _iosInfo = await deviceInfo.iosInfo;
     }
+
     _dio = Dio(BaseOptions(
-        baseUrl: networkConfig.baseUrl,
+        baseUrl: networkConfig.baseUrl ?? '',
         contentType: networkConfig.contentType,
         receiveTimeout: networkConfig.receiveTimeout,
         connectTimeout: networkConfig.connectTimeout));
@@ -52,8 +54,7 @@ class NetworkService {
     }, onError: (error, handler) {
       handler.next(error);
     }));
-    if (networkConfig.isShowHttpLog) {
-      print('networkConfig: $networkConfig');
+    if (!kReleaseMode) {
       _dio?.interceptors.add(LogInterceptor(
           responseHeader: true, requestBody: true, responseBody: true));
     }
@@ -73,11 +74,31 @@ class NetworkService {
       if (baseUrl.endsWith('/') && path.startsWith('/')) {
         if (baseUrl.length > 0) {
           baseUrl = baseUrl.substring(0, baseUrl.length - 1);
+          path = path.substring(1, path.length);
+        }
+        if (baseUrl.endsWith('/')) {
+          return path;
+        } else {
+          return '/$path';
         }
       }
       return '$baseUrl/$path';
+    } else {
+      var defaultBaseUrl = _networkConfig.baseUrl;
+      if (defaultBaseUrl != null) {
+        if (defaultBaseUrl.endsWith('/') && path.startsWith('/')) {
+          if (defaultBaseUrl.length > 0) {
+            path = path.substring(1, path.length);
+          }
+        }
+        if (defaultBaseUrl.endsWith('/')) {
+          return path;
+        } else {
+          return '/$path';
+        }
+      }
+      return path;
     }
-    return '$baseUrl/$path';
   }
 
   Future<Map<String, dynamic>> get(String path,

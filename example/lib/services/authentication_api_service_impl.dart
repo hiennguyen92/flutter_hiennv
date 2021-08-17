@@ -16,7 +16,6 @@ class AuthenticationApiServiceImplement extends AuthenticationApiService {
 
     Map<String, dynamic> json = await networkService.post('login',
         data: <String, dynamic>{'email': username, 'password': password},
-        baseUrl: 'https://fake-api.hiennv.com',
         apiCallback: apiCallback);
     print('login: $json');
     AuthResponse authResponse = AuthResponse.fromJson(json);

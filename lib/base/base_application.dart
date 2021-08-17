@@ -23,7 +23,7 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatefulWidget {
       NetworkService networkService, AuthInfo authInfo);
 
   @protected
-  NetworkConfig networkConfigProvider() {
+  NetworkConfig networkConfig(){
     return NetworkConfig();
   }
 
@@ -34,7 +34,7 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatefulWidget {
           create: (_) => AppNavigationService.instance),
       Provider<AppDialogService>(create: (_) => AppDialogService()),
       Provider<CacheService>(create: (_) => CacheService()),
-      Provider<NetworkService>(create: (_) => NetworkService(NetworkConfig())),
+      Provider<NetworkService>(create: (_) => NetworkService(networkConfig())),
       ChangeNotifierProvider<AuthInfo>(
           create: (BuildContext context) => AuthInfo(
                 Provider.of(context, listen: false),
@@ -53,9 +53,10 @@ abstract class BaseApplication<T extends BaseAppRoute> extends StatefulWidget {
   }
 }
 
-abstract class BaseApplicationState<E extends StatefulWidget, T extends BaseAppRoute> extends State<E> {
-  late final T appRoute = Provider.of<T>(context, listen: false);
-  late final AppNavigationService navigationService = Provider.of<AppNavigationService>(context, listen: false);
+abstract class BaseApplicationState<E extends BaseApplication>
+    extends State<E> {
+  late final AppNavigationService navigationService =
+      Provider.of<AppNavigationService>(context, listen: false);
 
   @override
   Widget build(BuildContext context) {

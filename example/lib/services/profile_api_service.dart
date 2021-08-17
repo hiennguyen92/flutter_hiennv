@@ -18,7 +18,6 @@ class ProfileApiService extends BaseApiService {
   Future<ProfileResponse> getProfile(ApiCallback? apiCallback) async {
     var options = await buildAuthHeaderOptions();
     Map<String, dynamic> json = await networkService.get('profiles/1',
-        baseUrl: 'https://fake-api.hiennv.com',
         options: options,
         apiCallback: apiCallback);
     ProfileResponse profileResponse = ProfileResponse.fromJson(json);

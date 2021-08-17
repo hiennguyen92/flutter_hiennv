@@ -63,44 +63,36 @@ class _HomeScreenState extends BaseStateful<HomeScreen, HomeViewModel> {
                     children: [
                       Selector<HomeViewModel, int>(
                         selector: (_, provider) => provider.state.counter,
-                        builder: (_, counter, __) =>
-                            Text('Selector: $counter', style: regularTextStyle()),
+                        builder: (_, counter, __) => Text('Selector: $counter',
+                            style: regularTextStyle()),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       Consumer<HomeViewModel>(
                           builder: (_, provider, __) => Text(
                               'Consumer: ${provider.state.counter}',
                               style: regularTextStyle())),
-                      TextButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                          overlayColor:
-                              MaterialStateProperty.resolveWith<Color>(
-                            (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.hovered))
-                                return Colors.blue.withOpacity(0.04);
-                              if (states.contains(MaterialState.focused) ||
-                                  states.contains(MaterialState.pressed))
-                                return Colors.blue.withOpacity(0.12);
-                              return Colors.blue;
-                            },
-                          ),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          padding: EdgeInsets.all(8),
+                          textStyle: regularTextStyle(),
                         ),
                         onPressed: () {
-                          viewModel.getProfileApi();
+                          viewModel.getProfileApiAndSave();
                         },
                         child: Container(
                           height: 44.0,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text('Get Profile',
+                              Text('Get Profile and Save to DB',
                                   style: regularTextStyle(height: 1.0))
                             ],
                           ),
                         ),
                       ),
+                      SizedBox(height: 10),
                       Container(
                           height: 200,
                           width: double.infinity,
@@ -132,6 +124,27 @@ class _HomeScreenState extends BaseStateful<HomeScreen, HomeViewModel> {
                                             style: regularTextStyle())
                                     ],
                                   ))),
+                      SizedBox(height: 10),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.blue,
+                          padding: EdgeInsets.all(8),
+                          textStyle: regularTextStyle(),
+                        ),
+                        onPressed: () {
+                          viewModel.getProfileFromSqlite();
+                        },
+                        child: Container(
+                          height: 44.0,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text('Get From Sqlite',
+                                  style: regularTextStyle(height: 1.0))
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
