@@ -1,3 +1,8 @@
+## [1.0.0+2] - Aug 19, 2021.
+
+* remove web platform
+* remove device_info
+
 ## [1.0.0+1] - Aug 18, 2021.
 
 * add database service

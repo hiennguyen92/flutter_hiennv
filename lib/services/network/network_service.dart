@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:device_info/device_info.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -11,8 +10,6 @@ class NetworkService {
   final NetworkConfig _networkConfig;
 
   Dio? _dio;
-  AndroidDeviceInfo? _androidInfo;
-  IosDeviceInfo? _iosInfo;
 
   NetworkService(this._networkConfig) {
     _initDio(_networkConfig);
@@ -20,12 +17,6 @@ class NetworkService {
 
   Future<void> _initDio(NetworkConfig networkConfig) async {
     print('_initDio: $networkConfig');
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
-      _androidInfo = await deviceInfo.androidInfo;
-    } else if (Platform.isIOS) {
-      _iosInfo = await deviceInfo.iosInfo;
-    }
 
     _dio = Dio(BaseOptions(
         baseUrl: networkConfig.baseUrl ?? '',

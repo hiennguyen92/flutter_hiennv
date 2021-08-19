@@ -1,6 +1,4 @@
 PODS:
-  - device_info (0.0.1):
-    - Flutter
   - Flutter (1.0.0)
   - flutter_hiennv (0.0.1):
     - Flutter
@@ -18,7 +16,6 @@ PODS:
   - Toast (4.0.0)
 
 DEPENDENCIES:
-  - device_info (from `.symlinks/plugins/device_info/ios`)
   - Flutter (from `Flutter`)
   - flutter_hiennv (from `.symlinks/plugins/flutter_hiennv/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
@@ -31,8 +28,6 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
-  device_info:
-    :path: ".symlinks/plugins/device_info/ios"
   Flutter:
     :path: Flutter
   flutter_hiennv:
@@ -45,7 +40,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
 
 SPEC CHECKSUMS:
-  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_hiennv: 21e55c5c4e99642275b235ffaee1bd3e3db1b51c
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58

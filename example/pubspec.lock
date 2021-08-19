@@ -50,20 +50,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  device_info:
-    dependency: transitive
-    description:
-      name: device_info
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
-  device_info_platform_interface:
-    dependency: transitive
-    description:
-      name: device_info_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   dio:
     dependency: transitive
     description:
@@ -103,7 +89,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1+4"
+    version: "1.0.0+2"
   flutter_localizations:
     dependency: transitive
     description: flutter
